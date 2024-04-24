@@ -96,7 +96,6 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
             break;
         case WM_PAINT:
             {
-
                 HDC hdc = graphic.StartDraw(hWnd);
 
                 // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
