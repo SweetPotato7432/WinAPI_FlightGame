@@ -53,15 +53,25 @@ int Application::MessageLoop()
 {
     MSG msg;
 
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
+    //// 기본 메시지 루프입니다:
+    //while (GetMessage(&msg, nullptr, 0, 0))
+    //{
 
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+    //    TranslateMessage(&msg);
+    //    DispatchMessage(&msg);
 
+    //}
+    while (true) {
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+            if (msg.message == WM_QUIT)
+                break;
+
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        InvalidateRect(hWnd, NULL, TRUE);
     }
-
+    
     return (int)msg.wParam;
 }
 
@@ -96,7 +106,6 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
             break;
         case WM_PAINT:
             {
-                // test
                 HDC hdc = graphic.StartDraw(hWnd);
 
                 // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
