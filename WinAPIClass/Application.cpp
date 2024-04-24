@@ -61,6 +61,8 @@ int Application::MessageLoop()
     //    DispatchMessage(&msg);
 
     //}
+
+    // 메시지 유무와 관계 없이 계속 다시 그린다, 종료 메시지가 오면 종료
     while (true) {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
             if (msg.message == WM_QUIT)
