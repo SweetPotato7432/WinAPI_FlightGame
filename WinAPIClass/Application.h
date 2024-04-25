@@ -54,6 +54,9 @@ public :
 	int MessageLoop();
 	LRESULT CALLBACK MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
+public:
+	static HINSTANCE GetInstanceHandle();
+
 public : 
 	Application();
 	~Application() = default;

@@ -1,4 +1,7 @@
 #include "Application.h"
+#include "GameObject.h"
+#include "Renderer.h"
+#include "Background.h"
 
 Application* Application::instance = nullptr;
 
@@ -71,7 +74,10 @@ int Application::MessageLoop()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-        InvalidateRect(hWnd, NULL, TRUE);
+        // 매 프레임 마다 게임 오브젝트를 업데이트
+        GameObject::EventUpdate();
+
+        InvalidateRect(hWnd, NULL, FALSE);
     }
     
     return (int)msg.wParam;
@@ -81,48 +87,65 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 {
     switch (message)
     {
-        case WM_COMMAND:
-            {
-                int wmId = LOWORD(wParam);
-                // 메뉴 선택을 구문 분석합니다:
-                switch (wmId)
-                {
-                    case IDM_ABOUT:
-                        //DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                        break;
-                    case IDM_EXIT:
-                        DestroyWindow(hWnd);
-                        break;
-                    default:
-                        return DefWindowProc(hWnd, message, wParam, lParam);
-                }
-            }
+    case WM_CREATE:
+    {
+        // 게임 오브젝트에 주소 저장, 해제를 모두 한다.
+        new Background;
+    }
+    break;
+    case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // 메뉴 선택을 구문 분석합니다:
+        switch (wmId)
+        {
+        case IDM_ABOUT:
+            //DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
             break;
-        case WM_SIZE : 
-            {
-                int width = LOWORD(lParam);
-                int height = HIWORD(lParam);
-
-                graphic.SetSize(width, height);
-            }
-            break;
-        case WM_PAINT:
-            {
-                HDC hdc = graphic.StartDraw(hWnd);
-
-                // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
-                graphic.EndDraw();
-
-            }
-            break;
-        case WM_DESTROY:
-            PostQuitMessage(0);
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
             break;
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
+        }
+    }
+    break;
+    case WM_SIZE:
+    {
+        int width = LOWORD(lParam);
+        int height = HIWORD(lParam);
+
+        graphic.SetSize(width, height);
+    }
+    break;
+    case WM_PAINT:
+    {
+        HDC hdc = graphic.StartDraw(hWnd);
+
+        // 모든 그림을 그림
+        Renderer::DrawAll(hdc);
+
+        graphic.EndDraw();
+
+    }
+    break;
+    case WM_DESTROY:
+    {
+        // 모든 게임 오브젝트를 해제
+        GameObject::EventQuit();
+        PostQuitMessage(0);
+    }
+
+    break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
+}
+
+HINSTANCE Application::GetInstanceHandle()
+{
+    return instance->hInst;
 }
 
 Application::Application()

@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
@@ -151,6 +153,7 @@
     <ResourceCompile Include="WinAPIClass.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="BG.bmp" />
     <Image Include="small.ico" />
     <Image Include="WinAPIClass.ico" />
   </ItemGroup>
