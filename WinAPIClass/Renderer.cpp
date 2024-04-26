@@ -31,7 +31,8 @@ void Renderer::Draw(HDC hdc)
 
 	// 게임 오브젝트 위치를 중심으로 비트맵을 복사
 	const Vector2& pos = gameObject.GetPosition();
-	StretchBlt(hdc, pos.x - halfSize.cx, pos.y - halfSize.cy, size.cx, size.cy, memDC, 1, 0, bmSize.cx - 2, bmSize.cy, SRCCOPY);
+	const Vector2& ratio = Application::GetRatio();
+	StretchBlt(hdc, (pos.x - halfSize.cx) * ratio.x, (pos.y - halfSize.cy) * ratio.y, size.cx * ratio.x, size.cy * ratio.y, memDC, 1, 0, bmSize.cx - 2, bmSize.cy, SRCCOPY);
 
 	DeleteDC(memDC);
 }

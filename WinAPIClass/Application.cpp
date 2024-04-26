@@ -38,8 +38,18 @@ ATOM Application::RegisterWindow(HINSTANCE hInstance)
 
 BOOL Application::Initiate(int nCmdShow)
 {
+    RECT wndRect = { 0,0,resolution.cx,resolution.cy };
+    // 윈도우의 너비, 높이는 메뉴바, 제목표시줄을 포함한 크기이다.
+    // 그러므로 해상도에 맞춰 출력영역을 생성하려면 해상도 보다 조금 더 넓게 윈도우를 생성해주어야 한다.
+    // AdjsutWindowRect : 출력 영역의 크기를 맞출 수 있도록 윈도우의 크기(메뉴, 제목 표시줄 등을 포함한...)를 계산해주는 함수
+    AdjustWindowRect(&wndRect, WS_OVERLAPPEDWINDOW, TRUE);
+
+    // 계산한 후 왼쪽 위 좌표가 0,0이 아니므로 실제 길이를 계산하려면 빼주어야 한다.
+    int width = wndRect.right - wndRect.left;
+    int height = wndRect.bottom - wndRect.top;
+
     hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInst, nullptr);
+        CW_USEDEFAULT, 0, width, height, nullptr, nullptr, hInst, nullptr);
 
     if (!hWnd)
     {
@@ -110,12 +120,16 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
         }
     }
     break;
-    case WM_SIZE:
+    case WM_SIZE: // 윈도우의 크기가 변경되었을때 발생하는 메시지
     {
-        int width = LOWORD(lParam);
-        int height = HIWORD(lParam);
+        resolution.cx = LOWORD(lParam);
+        resolution.cy = HIWORD(lParam);
 
-        graphic.SetSize(width, height);
+        // 비율 계산
+        ratio.x = resolution.cx * inverseResolution.x;
+        ratio.y = resolution.cy * inverseResolution.y;
+
+        graphic.SetSize(resolution.cx, resolution.cy);
     }
     break;
     case WM_PAINT:
@@ -148,8 +162,23 @@ HINSTANCE Application::GetInstanceHandle()
     return instance->hInst;
 }
 
+const SIZE& Application::GetDefaultResolution()
+{
+    return instance->defaultResolution;
+}
+
+const Vector2& Application::GetRatio()
+{
+    return instance->ratio;
+}
+
 Application::Application()
+    : defaultResolution({ 1600,900 }),
+    inverseResolution({ 1.0f / 1600.0f ,1.0f / 900.0f }),
+    ratio({ 1.0f,1.0f })
 {
     if (!instance)
         instance = this;
+    // 현재 해상도를 기본 해상도로
+    resolution = defaultResolution;
 }

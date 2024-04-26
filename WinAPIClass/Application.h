@@ -1,6 +1,7 @@
 #pragma once
 #include "framework.h"
 #include "WinAPIClass.h"
+#include "Vector2.h"
 
 #define MAX_LOADSTRING 100
 
@@ -45,6 +46,12 @@ private :
 	TCHAR szTitle[MAX_LOADSTRING];                  
 	TCHAR szWindowClass[MAX_LOADSTRING];    
 
+private:
+	const SIZE defaultResolution; // 기본 해상도
+	SIZE resolution; // 현재 해상도
+	const Vector2 inverseResolution; // 해상도의 역수
+	Vector2 ratio; // 비율
+
 private :
 	GraphicManager graphic;
 
@@ -56,6 +63,10 @@ public :
 
 public:
 	static HINSTANCE GetInstanceHandle();
+
+public:
+	static const SIZE& GetDefaultResolution(); // 기본 해상도를 가져오는 함수
+	static const Vector2& GetRatio();
 
 public : 
 	Application();

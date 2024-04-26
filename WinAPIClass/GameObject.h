@@ -42,6 +42,7 @@ private:
 public:
 	void Move(const Vector2& v); // 이동()
 	void SetActive(bool value); // 활성화 기능()	
+	void SetPosition(const Vector2& pos);
 	const Vector2& GetPosition();
 
 
