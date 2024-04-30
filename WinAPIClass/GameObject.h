@@ -31,7 +31,7 @@ public:
 	static void EventUpdate();
 	static void EventQuit();
 
-private:
+protected:
 	Vector2 position; // 위치
 	bool active; // 활성화 상태
 

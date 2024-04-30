@@ -136,6 +136,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="WinAPIClass.h" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="WinAPIClass.cpp" />
   </ItemGroup>

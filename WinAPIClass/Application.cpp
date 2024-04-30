@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Renderer.h"
 #include "Background.h"
+#include "Time.h"
 
 Application* Application::instance = nullptr;
 
@@ -84,6 +85,9 @@ int Application::MessageLoop()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+        Time::Update();
+
         // 매 프레임 마다 게임 오브젝트를 업데이트
         GameObject::EventUpdate();
 
@@ -99,8 +103,16 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
     {
     case WM_CREATE:
     {
+        Time::Start();
+
         // 게임 오브젝트에 주소 저장, 해제를 모두 한다.
-        new Background;
+        Background* bg[2];
+        bg[0] = new Background;
+        bg[0]->SetPosition({ defaultResolution.cx * 0.5f,defaultResolution.cy * 0.5f });
+        // 두번째 배경을 이어 붙인다.
+        bg[1] = new Background;
+        bg[1]->SetPosition({ defaultResolution.cx * 1.5f,defaultResolution.cy * 0.5f });
+
     }
     break;
     case WM_COMMAND:
