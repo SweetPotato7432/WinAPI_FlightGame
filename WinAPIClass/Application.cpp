@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Background.h"
 #include "Time.h"
+#include "Plane.h"
 
 Application* Application::instance = nullptr;
 
@@ -112,6 +113,9 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
         // 두번째 배경을 이어 붙인다.
         bg[1] = new Background;
         bg[1]->SetPosition({ defaultResolution.cx * 1.5f,defaultResolution.cy * 0.5f });
+
+        Plane* plane = new Plane;
+        plane->SetPosition({ 200.0f,400.0f });
 
     }
     break;
