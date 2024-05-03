@@ -11,11 +11,11 @@ void AtlasRenderer::Draw(HDC hdc)
 	// 게임 오브젝트 위치를 중심으로 비트맵을 복사
 	const Vector2& pos = gameObject.GetPosition();
 	const Vector2& ratio = Application::GetRatio();
-	StretchBlt(hdc, (pos.x - halfSize.cx) * ratio.x,
+	TransparentBlt(hdc, (pos.x - halfSize.cx) * ratio.x,
 		(pos.y - halfSize.cy) * ratio.y,
 		size.cx * ratio.x,
 		size.cy * ratio.y,
-		memDC, widthPerImage * index, 0, widthPerImage, bmSize.cy, SRCCOPY);
+		memDC, widthPerImage * index, 0, widthPerImage, bmSize.cy, backgroundColor);
 
 	DeleteDC(memDC);
 }

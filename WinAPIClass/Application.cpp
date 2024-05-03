@@ -4,6 +4,7 @@
 #include "Background.h"
 #include "Time.h"
 #include "Plane.h"
+#include "Animation.h"
 
 Application* Application::instance = nullptr;
 
@@ -91,6 +92,7 @@ int Application::MessageLoop()
 
         // 매 프레임 마다 게임 오브젝트를 업데이트
         GameObject::EventUpdate();
+        Animation::EventUpdate();
 
         InvalidateRect(hWnd, NULL, FALSE);
     }
