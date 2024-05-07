@@ -25,6 +25,9 @@ private:
 	void SetState(State state);
 
 public:
+	virtual void Update();
+
+public:
 	Plane();
 	~Plane() = default;
 };

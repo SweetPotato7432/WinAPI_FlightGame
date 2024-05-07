@@ -5,6 +5,7 @@
 #include "Time.h"
 #include "Plane.h"
 #include "Animation.h"
+#include "Input.h"
 
 Application* Application::instance = nullptr;
 
@@ -119,6 +120,14 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
         Plane* plane = new Plane;
         plane->SetPosition({ 200.0f,400.0f });
 
+    }
+    break;
+    case WM_KEYDOWN:
+    case WM_KEYUP:
+    {
+        //wParam : 누른 키 정보
+        // 누를때 true, 뗄때 false로 설정
+        Input::SetKey(wParam, message == WM_KEYDOWN);
     }
     break;
     case WM_COMMAND:

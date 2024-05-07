@@ -22,13 +22,20 @@ private:
 	int count; // 총 이미지 번호 개수
 
 private:
+	float time; // 다음 이미지로 넘기는 데에 걸리는 시간
+	float timeCheck; // 시간 측정용
+
+private:
 	bool loop; // 애니메이션 반복 설정
 
 private:
 	void Update();
 
 public:
-	Animation(GameObject& gameObject, AtlasRenderer& atlasRenderer, int* indexArr, int maxCount, bool loop);
+	void Initialize(); // 이미지 초기화 
+
+public:
+	Animation(GameObject& gameObject, AtlasRenderer& atlasRenderer, int* indexArr, int maxCount, bool loop, float sec);
 	~Animation();
 };
 
