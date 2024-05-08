@@ -1,7 +1,10 @@
 #pragma once
 #include "GameObject.h"
+#include <queue>
+using namespace std;
 
 class Animation;
+class Bullet;
 
 class Plane : public GameObject
 {
@@ -22,7 +25,17 @@ private:
 	State state; // 현재 상태
 
 private:
+	queue<Bullet*> bulletPool;
+	int bulletCount;
+
+	// 총알 발사 쿨타임을 정하기 위하여
+	const float shootCoolTime;
+	float shootTimeCheck;
+
+private:
 	void SetState(State state);
+	void CreateBullets();//총알 생성
+	void Shoot();// 총알 발사
 
 public:
 	virtual void Update();

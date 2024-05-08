@@ -4,6 +4,7 @@
 #include "Background.h"
 #include "Time.h"
 #include "Plane.h"
+#include "Bullet.h"
 #include "Animation.h"
 #include "Input.h"
 
@@ -119,6 +120,7 @@ LRESULT Application::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 
         Plane* plane = new Plane;
         plane->SetPosition({ 200.0f,400.0f });
+
 
     }
     break;
